@@ -1,0 +1,109 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@_unwriter" />
+<meta name="twitter:title" content="Button Page" />
+<meta name="twitter:description" content="Generate and Share Moneybutton Landing Pages" />
+<meta name="twitter:image" content="https://button.bitdb.network/buttonpage.png" />
+<meta property="og:url" content="https://button.bitdb.network" />
+<meta property="og:type"   content="website" />
+<meta property="og:title" content="Button Page" />
+<meta property="og:description" content="Generate and Share Moneybutton Landing Pages" />
+<meta property="og:image" content="https://bitcom.bitdb.network/buttonpage.png" />
+<title>Button Page</title>
+<link rel="stylesheet" href="./css/buttonpage.css"></link>
+
+<!-- todo - get import debounce.min.js working instead of pasting it here -->
+<script>
+  !function(e,t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?module.exports=t():e.debounce=t()}(this,function(){"use strict";return function(e,t){var n;return function(){var o=this,i=arguments;clearTimeout(n),n=setTimeout(function(){e.apply(o,i)},t)}}});
+</script>
+
+</head>
+<body>
+<h1>Button Page</h1>
+<div class='sub'>Generate and Share <a href='https://relayx.io'>RelayOne</a> Landing Pages</div>
+<div class='container'>
+  <div id='editor'></div>
+  <div id='sent'></div>
+  <div id='b'></div>
+  <hr>
+  <footer class='sub'>
+    <a href="#" id='reveal'>How to generate the URL programmatically</a>
+    <pre class='hidden'>
+The URL is:
+
+var str = JSON.stringify(payload);  // relayOne payload
+var b64 = btoa(str);                // base64 encoded
+var url = "https://button.bitdb.network/#" + b64;</pre>
+  </footer>
+</div>
+<!-- <script src="./js/debounce.min.js"></script> -->
+<script src="../relayone.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ace.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/mode-json.js"></script>
+<script>
+var h = null
+var editor
+if(window.location.hash) {
+  h = window.location.hash.slice(1)
+}
+document.addEventListener("DOMContentLoaded", function(e) {
+  var j
+  if (h) {
+    j = JSON.parse(atob(h))
+  } else {
+    j = {
+      to: "1HQ8momxTp9MYkzDLy9bFMUQgnba189qZE",
+      editable: true,
+      currency: "USD",
+      devMode: true,
+      amount: ".10",
+    }
+  }
+  j.onPayment = function(r) {
+    console.log("success:::", r)
+  }
+  j.onError = function(err) {
+    console.log("error:::", err)
+  }
+  document.querySelector("#reveal").addEventListener("click", function(e) {
+    e.preventDefault();
+    document.querySelector(".hidden").classList.remove("hidden")
+  })
+  console.log(j)
+  editor = ace.edit("editor");
+  editor.setTheme("ace/theme/mono_industrial");
+  editor.session.setMode("ace/mode/json");
+  editor.setShowPrintMargin(false);
+  editor.setOptions({
+    maxLines: Infinity,
+    minLines: 3,
+    tabSize: 2,
+    useSoftTabs: true
+  })
+  editor.setValue(JSON.stringify(j, null, 2))
+  editor.clearSelection()
+  relayone.render(document.querySelector("#b"), j)
+  var func = debounce(function() {
+    var query = editor.getValue();
+    var q = btoa(query)
+    try {
+      var jj = JSON.parse(query)
+      jj.onPayment = function(r) {
+        console.log("success", r)
+        document.querySelector("#sent").innerHTML = "<a target='_blank' href='https://whatsonchain.com/tx/"+r.txid+"'>Transaction sent: " + r.txid + "</a>"
+      }
+      jj.onError = function(err) {
+        console.log("error", err)
+      }
+      history.pushState(null, null, window.location.origin + "#" + q)
+      relayone.render(document.querySelector("#b"), jj)
+    } catch (e) {
+    }
+  }, 1000);
+  editor.getSession().on('change', func)
+})
+</script>
+</body>
+</html>

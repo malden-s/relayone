@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <script src="../relayone.ts" type="application/javascript"></script>
+  </head>
+
+  <body>
+    <div id="relayone"></div>
+    <div id="relayone2"></div>
+    <div id="relayone3"></div>
+    <div id="relayone4"></div>
+
+    <script type="application/javascript">
+      let config = {
+        label: "Donate",
+        successMessage: "Nice one",
+        disabled: false,
+        editable: false,
+        outputs: [
+          // {
+          //   to: 'OP_RETURN 72656c61796f6e65 75746638 68656c6c6f20736d616c6c20776f726c642e',
+          //   amount: '0',
+          //   currency: 'BSV',
+          // },
+          {
+            to: "$satchmo",
+            amount: ".01",
+            currency: "USD"
+            // amount: '.00001000'
+          },
+          {
+            to: "1satchmo",
+            amount: ".01",
+            currency: "USD"
+            // amount: '.00001000'
+          }
+        ],
+        onLoad: function() {
+          console.log("loaded");
+        },
+        onPayment: function(arg) {
+          console.log("payment success", arg);
+        },
+        onError: function(arg) {
+          console.error("payment error", arg);
+        }
+      };
+      // relayone.render(document.getElementById("relayone"), config);
+      relayone.render(document.getElementById("relayone2"), {
+        to: "1black",
+        amount: "9999999",
+        currency: "USD",
+        editable: true
+      });
+      // relayone.render(document.getElementById("relayone3"), {
+      //   ...config,
+      //   disabled: true
+      // });
+      relayone.render(document.getElementById("relayone4"), {
+        ...config,
+        outputs: void 0,
+        to: "1black",
+        amount: "0.01",
+        currency: "USD",
+        editable: true
+      });
+    </script>
+  </body>
+</html>

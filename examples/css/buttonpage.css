@@ -1,0 +1,13 @@
+body { padding-top: 100px; }
+.container { display: flex; flex-direction: column; width: 500px; max-width: 100%; margin: 0 auto; }
+.container input[type=text] { flex-grow: 1; margin-bottom: 10px; padding: 10px; }
+h1 { font-family: Georgia; display: block; text-align: center; margin: 0; }
+pre { background: rgba(0,0,0,0.05); padding: 10px; }
+#b { margin-top: 10px; }
+.sub { text-align: center; margin: 10px 10px 20px;; font-family: Menlo, monaco, Courier; font-size: 12px; }
+.sub pre { text-align: left; font-size; 12px; padding: 20px;}
+#set a { font-size: 10px; padding: 10px; display: block; font-family: Menlo, monaco, Courier; }
+a { color: red; }
+hr { background: rgba(0,0,0,0.1); }
+.hidden { display: none !important; }
+footer a { color: gray; }

@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://one.relayx.io/relayone.js"
+      type="application/javascript"
+    ></script>
+  </head>
+
+  <body>
+    <div class="container-fluid" style="padding: 20px; text-align: center">
+      <div id="relayone"></div>
+    </div>
+    <div class="container" style="text-align: center">
+      Integrate RelayOne with your website or app. <br />
+      <a href="https://docs.relayx.io">Documentation</a> and
+      <a href="https://t.me/RelayXOfficial">Telegram</a>.
+    </div>
+    <!-- <input id="to" value="1black" />
+    <input id="amount" value="0.1" />
+    <button onclick="onChange()">Update</button> -->
+    <div id="relayone2"></div>
+    <div id="relayone3"></div>
+
+    <script type="application/javascript">
+      let toEl = document.getElementById("to");
+      let amountEl = document.getElementById("amount");
+      function mkConfig(disabled) {
+        return {
+          disabled: disabled,
+          editable: false,
+          outputs: [
+            {
+              to: "1black",
+              amount: "0.01",
+              currency: "USD"
+            }
+          ],
+          onPayment: function(arg) {
+            console.log("payment success", arg);
+          },
+          onError: function(arg) {
+            console.error("payment error", arg);
+          }
+        };
+      }
+
+      function mkEditableConfig(disabled) {
+        return {
+          disabled: disabled,
+          editable: true,
+
+          to: toEl.value,
+          amount: amountEl.value,
+          currency: "USD",
+
+          onPayment: function(arg) {
+            console.log("payment success", arg);
+          },
+          onError: function(arg) {
+            console.error("payment error", arg);
+          }
+        };
+      }
+
+      function onChange(e) {
+        relayone.render(document.getElementById("relayone"), mkConfig(false));
+        // relayone.render(
+        //   document.getElementById("relayone2"),
+        //   mkEditableConfig(false)
+        // );
+        // relayone.render(document.getElementById("relayone3"), mkConfig(true));
+      }
+      onChange();
+    </script>
+  </body>
+</html>

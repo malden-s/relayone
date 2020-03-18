@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <style>
+      input#file {
+        display: block;
+        padding: 10px;
+        background: whitesmoke;
+        width: 100%;
+        margin: 10px 0;
+      }
+      a#tx {
+        display: block;
+        padding: 10px;
+        margin: 10px 0;
+        color: red;
+        font-size: 12px;
+        font-family: Menlo, monaco, Courier;
+      }
+    </style>
+    <script src="https://www.moneybutton.com/moneybutton.js"></script>
+    <script src="../relayone.js"></script>
+    <script src="https://unpkg.com/datapay"></script>
+    <script src="js/databutton.js"></script>
+    <script src="js/databuttonMB.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function(e) {
+        let file = {
+          $el: "#file",
+          data: [
+            "19HxigV4QyBv3tHpQVcUEQyq1pzZVdoAut",
+            databutton.file,
+            databutton.type,
+            "binary",
+            databutton.name
+          ]
+        };
+        let fileMB = {
+          $el: "#file",
+          data: [
+            "19HxigV4QyBv3tHpQVcUEQyq1pzZVdoAut",
+            databuttonMB.file,
+            databuttonMB.type,
+            "binary",
+            databuttonMB.name
+          ]
+        };
+        let button = {
+          devMode: true,
+          onPayment: function(msg) {
+            console.log(msg);
+            document.querySelector("a#tx").innerHTML =
+              "View on B (" + msg.txid + ")";
+            document
+              .querySelector("a#tx")
+              .setAttribute("href", "https://b.bitdb.network#" + msg.txid);
+          },
+          onError: function(err) {
+            console.error(err);
+          }
+        };
+
+        button.$el = "#button";
+        databutton.build({
+          file: file,
+          button: button
+        });
+
+        // TODO - this causes relayone not to load :(
+        //   buttonMB = Object.assign({}, button);
+
+        //   buttonMB.$el = "#buttonMB";
+        //   databuttonMB.build({
+        //     file: fileMB,
+        //     button: buttonMB
+        //   });
+      });
+    </script>
+  </head>
+  <body>
+    <input type="file" id="file" />
+    <a target="_blank" href="#" id="tx"></a>
+    <div id="button"></div>
+    <div id="buttonMB"></div>
+  </body>
+</html>

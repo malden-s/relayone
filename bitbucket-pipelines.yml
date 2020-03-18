@@ -1,0 +1,51 @@
+image: node:10.15.3
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - node
+        script: # Modify the commands below to build your repository.
+          - yarn
+          - yarn test
+          - yarn build
+          - yarn build-storybook
+        artifacts:
+          - build/**
+          - dist/relayone.js
+          - storybook-static/**
+    - step:
+        name: Deploy to production
+        deployment: Production
+        trigger: manual
+        script:
+          - pipe: atlassian/scp-deploy:0.3.4
+            variables:
+              USER: "root"
+              SERVER: "37.58.57.76"
+              REMOTE_PATH: "/var/www/html"
+              LOCAL_PATH: "build/*"
+          - pipe: atlassian/scp-deploy:0.3.4
+            variables:
+              USER: "root"
+              SERVER: "37.58.57.76"
+              REMOTE_PATH: "/var/www/html/embed.js"
+              LOCAL_PATH: "dist/relayone.js"
+          - pipe: atlassian/scp-deploy:0.3.4
+            variables:
+              USER: "root"
+              SERVER: "37.58.57.76"
+              REMOTE_PATH: "/var/www/html/relayone.js"
+              LOCAL_PATH: "dist/relayone.js"
+          - pipe: atlassian/scp-deploy:0.3.4
+            variables:
+              USER: "root"
+              SERVER: "37.58.57.76"
+              REMOTE_PATH: "/var/www/html/demo.html"
+              LOCAL_PATH: "demo/demo.html"
+          - pipe: atlassian/scp-deploy:0.3.4
+            variables:
+              USER: "root"
+              SERVER: "37.58.57.76"
+              REMOTE_PATH: "/var/www/html/storybook-777"
+              LOCAL_PATH: "storybook-static/**"

@@ -1,0 +1,91 @@
+.App {
+  text-align: center;
+}
+.clear {
+  zoom: 1;
+  clear: both;
+}
+
+.clear:after {
+  display: block;
+  content: "\0020";
+  overflow: hidden;
+  height: 0;
+  clear: both;
+}
+.qr-main {
+  margin: 0 auto;
+  padding: 20px;
+  width: 300px;
+  height: 300px;
+  background: rgb(47, 59, 82);
+  border-radius: 10px;
+}
+.editableInput{
+  display: block;
+}
+.logo {
+  width: 120px;
+  height: 20px;
+  margin: 20px auto;
+  display: block;
+}
+.instructions {
+  color: #fff;
+  line-height: 24px;
+  font-size: 18px;
+  text-align: center;
+  margin: 20px 0;
+}
+.success-icon {
+  width: 120px;
+  height: 120px;
+  display: block;
+  margin: 0 auto;
+}
+.relay-main {
+  margin: 0 auto;
+  width: 200px;
+}
+.relay {
+  width: 42px;
+  height: 42px;
+  float: left;
+}
+.content-right {
+  float: right;
+}
+.wallet {
+  color: #fff;
+  line-height: 22px;
+  font-size: 14px;
+}
+.bold {
+  font-weight: bold;
+}
+.download-div {
+}
+.download {
+  color: #fff;
+  line-height: 20px;
+  font-size: 14px;
+  float: left;
+}
+.arrow {
+  width: 12px;
+  height: 20px;
+  float: right;
+}
+.close-button {
+  width: 120px;
+  height: 36px;
+  margin: 0 auto;
+  background: rgb(38, 105, 255);
+  text-align: center;
+  cursor: pointer;
+}
+.close {
+  color: #fff;
+  line-height: 36px;
+  font-size: 18px;
+}
